@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
     <meta charset="UTF-8">
@@ -7,27 +7,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
     <link rel="stylesheet" href="./style.css">
-
-    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.css'>
-
+    <!-- ----------------------------------------------------------------------- -->
     <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.2/jquery.min.js'></script>
-<!-- ----------------------------------------------------------------------- -->
-    <script type="text/javascript" src="./verify_session.js"></script>  
+    <script type="text/javascript" src="https://pollossilver2023.000webhostapp.com/login/js/verify_session.js"></script>
     <script type="text/javascript">
-        (async function () {
-            try {
-                let rol = await verify_session();
-                if (rol !== "null") {
-                    window.location.href = "./dashboard.html"
-                }
-            } catch (error) {
-                alert('Error 404: verify_session')
-                console.log(error);
-            }
-        })();
+        $(document).ready(function() {
+            verify_session()
+                .then(function (response) {
+                    if (Array.isArray(response) && response.length === 0) {
+                        // Sale de la función y evita que se ejecute el código restante
+                        return;
+                    }
+                    window.location.href = "./dashboard.html";
+                })
+                .catch(function (error) {
+                    // Manejar el error en caso de que ocurra
+                    console.log("🚀 ~ file: login.html:29 ~ error:", error);
+                });
+        });
     </script>
-    <script type="text/javascript" src="./logout.js"></script>
-<!-- ----------------------------------------------------------------------- -->
+    <!-- ----------------------------------------------------------------------- -->
+    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.css'>
 </head>
 
 <body>
@@ -76,14 +76,17 @@
 
 <!-- ----------------------------------------------------------------------- -->
 <script>
-    $(".inputBox input").keyup(function () {
-        if ($(this).val().length > 0) {
-            $(this).closest(".inputBox input").addClass("filled")
-        } else {
-            $(this).closest(".inputBox input").removeClass("filled")
-        }
+    $(document).ready(function () {
+        $(".inputBox input").keyup(function () {
+            if ($(this).val().length > 0) {
+                $(this).closest(".inputBox input").addClass("filled")
+            } else {
+                $(this).closest(".inputBox input").removeClass("filled")
+            }
+        })
     })
 </script>
-<script src="./login.js"></script>
+<script src="https://pollossilver2023.000webhostapp.com/login/js/login_empleado.js"></script>
 <!-- ----------------------------------------------------------------------- -->
+
 </html>

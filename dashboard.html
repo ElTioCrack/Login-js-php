@@ -1,51 +1,61 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>dashboard</title>
 
     <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.2/jquery.min.js'></script>
-    <!-- ----------------------------------------------------------------------- -->
-    <script type="text/javascript" src="./verify_session.js"></script>
+    <script type="text/javascript" src="https://pollossilver2023.000webhostapp.com/login/js/verify_session.js"></script>
+    <script type="text/javascript" src="https://pollossilver2023.000webhostapp.com/login/js/logout.js"></script>
+    <script type="text/javascript" src="https://pollossilver2023.000webhostapp.com/login/js/session_data.js"></script>
     <script type="text/javascript">
-        (async function () {
-            try {
-                let rol = await verify_session();
+        window.onload = function () {
+            var nombres
+            var apellidos
+            var tipo_usuario
+            session_data()
+                .then(function (response) {
+                    // response = datos recuperados de iniciar sesion
+                    nombres = response.nombres
+                    apellidos = response.apellidos
+                    tipo_usuario = response.usuario.tipousuario.tipo
+                    // Hacer algo dependiendo al tipo de usuario
 
-                switch (rol) {
-                    case "Jefe":
-                        // alert(rol);
-                        $("header").html(`<h1>${rol}</h1>`);
-                        break;
-                    case "Empleado":
-                        // alert(rol);
-                        $("header").html(`<h1>${rol}</h1>`);
-                        break;
-                    default:
-                        alert("Acceso no autorizado");
-                        logout();
-                        break;
-                }
-            } catch (error) {
-                alert('Error 404: verify_session')
-                console.log(error);
-            }
-        })();
+                    $("h1").text(apellidos+ " "+ nombres)
+
+                    switch (tipo_usuario) {
+                        case "Jefe":
+                            $("main").load("jefe.html");
+                            break;
+                        case "Empleado":
+                            // $("main").text("<h2>Empleado</h2>")
+                            $("main").load("empleado.html");
+                            break;
+                        default:
+                            logout()
+                            break;
+                    }
+                    
+                })
+                .catch(function (error) {console.log(error)});
+            console.log('%c%s', 'color: #d90000', nombres);
+        };
     </script>
-    <script type="text/javascript" src="./logout.js"></script>
 </head>
 
 <body>
     <header>
-
+        <h1>Titulo</h1>
+        <div>Cerrar Sessión</div>
     </header>
     <main>
-        <div>Cerrar Sessión</div>
+
     </main>
 </body>
+
 <script type="text/javascript">
     $(document).ready(function () {
         let btn_logout = $("div")
