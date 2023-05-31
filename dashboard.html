@@ -19,30 +19,36 @@
             session_data()
                 .then(function (response) {
                     // response = datos recuperados de iniciar sesion
-                    nombres = response.nombres
-                    apellidos = response.apellidos
-                    tipo_usuario = response.usuario.tipousuario.tipo
-                    // Hacer algo dependiendo al tipo de usuario
-
-                    $("h1").text(apellidos+ " "+ nombres)
-
-                    switch (tipo_usuario) {
-                        case "Jefe":
-                            $("main").load("jefe.html");
-                            break;
-                        case "Empleado":
-                            // $("main").text("<h2>Empleado</h2>")
-                            $("main").load("empleado.html");
-                            break;
-                        default:
-                            logout()
-                            break;
-                    }
-                    
+                    init(response)
                 })
-                .catch(function (error) {console.log(error)});
-            console.log('%c%s', 'color: #d90000', nombres);
+                .catch(function (error) { console.log(error) });
         };
+
+        var nombres
+        var apellidos
+        var tipo_usuario
+
+        function init(response) {
+            nombres = response.nombres
+            apellidos = response.apellidos
+            tipo_usuario = response.usuario.tipousuario.tipo
+            // Hacer algo dependiendo al tipo de usuario
+
+            $("h1").text(apellidos + " " + nombres)
+
+            switch (tipo_usuario) {
+                case "Jefe":
+                    $("main").load("jefe.html");
+                    break;
+                case "Empleado":
+                    // $("main").text("<h2>Empleado</h2>")
+                    $("main").load("empleado.html");
+                    break;
+                default:
+                    logout()
+                    break;
+            }
+        }
     </script>
 </head>
 
